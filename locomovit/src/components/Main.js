@@ -6,12 +6,11 @@ export const Main = () => {
     return (
         <>
             <header className="App-header">
-                <h1>Locomovit</h1>
                 <Header />
             </header>
             <body>
                 <ul>
-                    This is the cities that we are going to consider
+                    These are cities that we are going to consider
                     <li>Águas Claras</li>
                     <li>Brazlândia</li>
                     <li>Candangolândia</li>
