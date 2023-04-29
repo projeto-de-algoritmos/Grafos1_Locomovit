@@ -1,16 +1,15 @@
 import React from 'react';
 import './styles/Header.css';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
+    let navigate = useNavigate();
     return (
         <header>
             <nav>
-                <li><Link to="/">Pagina Inicial</Link></li>
-                <li><Link to="/about-us">Sobre Nós</Link></li>
-                <li><Link to="/about-the-project">Sobre o Projeto</Link></li>
-                <ul>
-                </ul>
+                <li onClick={() => navigate('/')}>Pagina Inicial</li>
+                <li onClick={() => navigate('/about-us')}>Sobre Nós</li>
+                <li onClick={() => navigate('/about-the-project')}>Sobre o Projeto</li>
             </nav>
         </header>
     );
