@@ -1,3 +1,17 @@
+/* palheta de cores
+#121212 (Preto)
+#1C1C1C (Cinza escuro)
+#2A2A2A (Cinza ainda mais escuro)
+#505050 (Cinza médio)
+#9C9C9C (Cinza claro)
+#C1C1C1 (Cinza muito claro)
+#FFFFFF (Branco) */
+:root {
+  --color-background: #121212;
+  --color-text: #C1C1C1;
+  --color-link: #9C9C9C;
+}
+
 .App {
   text-align: center;
 }
@@ -13,25 +27,26 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
+.App {
+  background-color: var(--color-background);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: var(--color-text);
 }
 
 .App-link {
-  color: #61dafb;
+  color: var(--color-link);
 }
 
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
