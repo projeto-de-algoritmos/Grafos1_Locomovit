@@ -10,7 +10,7 @@
 | 190094478  |  Pedro Henrique Nogueira Bragança |
 
 ## Sobre 
-Este projeto consiste em armazenar as distâncias entre as cidades satélites ao redor de brasília, e determinar quais seriam as distancia em uma viagem entre elas.
+Este projeto consiste em cadastrar as cidades envolvidas e as distâncias entre as cidades satélites ao redor de brasília, e determinar quais seriam as distancia em uma viagem entre elas.
 
 ## Screenshots
 Adicione 3 ou mais screenshots do projeto em funcionamento.
