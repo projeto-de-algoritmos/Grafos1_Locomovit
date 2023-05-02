@@ -10,10 +10,12 @@
 | 190094478  |  Pedro Henrique Nogueira Bragança |
 
 ## Sobre 
-Este projeto consiste em cadastrar as cidades envolvidas e as distâncias entre as cidades satélites ao redor de brasília, e determinar quais seriam as distancia em uma viagem entre elas.
+Este projeto consiste em cadastrar as cidades envolvidas e as distâncias entre as cidades, e determinar quais seriam as distancia em uma viagem entre elas. E essa distância seria calculada através algoritmo de dijkstra, onde ele pega o menor caminho de um grafo, e ao final o programa faz a soma da distância.
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+![image](https://user-images.githubusercontent.com/57445188/235748360-a359b17b-9110-4e1c-9113-2bbd59b30549.png)
+![image](https://user-images.githubusercontent.com/57445188/235748514-c0d846b2-2fb5-4846-bdca-24ac24e23725.png)
+![image](https://user-images.githubusercontent.com/57445188/235749195-b7b3c0e8-749e-4e01-983b-0bd2df8c82b1.png)
 
 ## Instalação 
 **Linguagem**: JavaScript<br>
