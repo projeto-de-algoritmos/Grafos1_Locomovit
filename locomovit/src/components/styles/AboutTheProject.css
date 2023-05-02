@@ -1,4 +1,13 @@
 .about-the-project {
-    padding: 20px;
     margin-bottom: 20px;
+}
+
+h2 {
+    position: relative;
+    top: 0px;
+}
+
+p {
+    position: relative;
+    top: 0px;
 }

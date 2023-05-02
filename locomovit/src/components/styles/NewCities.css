@@ -1,0 +1,70 @@
+h1 {
+    color: var(--color-primary);
+}
+
+label {
+    color: var(--color-text);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.submit {
+    display: flex;
+    justify-content: space-around;
+}
+
+.submit button[type="submit"] {
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.submit button[type="submit"]:hover {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+}
+
+input[type="text"],
+input[type="number"] {
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+    border: none;
+    border-radius: 3px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+input[type="submit"] {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+span {
+    color: var(--color-text);
+    background-color: var(--color-tertiary);
+}

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './styles/NewCities.css'
 
 function NewCities() {
   const [graph, setGraph] = useState({});
@@ -30,6 +31,12 @@ function NewCities() {
     setGraph({ ...graph });
   }
 
+  String.prototype.toPascalCase = function () {
+    return this.split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join("");
+  };
+
   function handleSubmit(event) {
     event.preventDefault();
     const cityName = event.target.cityName.value;
@@ -47,50 +54,61 @@ function NewCities() {
       <body>
         <h1>Cadastro de Cidades</h1>
         <form id="city-form" onSubmit={handleSubmit}>
-          <label htmlFor="cityName">Nome da cidade:</label>
-          <input
-            type="text"
-            id="cityName"
-            name="cityName"
-            placeholder="Insira o nome da cidade"
-            required
-          />
+          <div className="nomeCidade">
+            <label htmlFor="cityName">Nome da cidade:</label>
+            <input
+              type="text"
+              id="cityName"
+              name="cityName"
+              placeholder="Insira o nome da cidade"
+              required
+            />
+          </div>
 
-          <label htmlFor="neighborName">Nome da cidade vizinha:</label>
-          <input
-            type="text"
-            id="neighborName"
-            name="neighborName"
-            placeholder="Insira o nome do vizinho"
-            required
-          />
-          <label htmlFor="distance">Distância:</label>
-          <input
-            type="number"
-            id="distance"
-            name="distance"
-            placeholder="Insira a distância entre as cidades"
-            min="0"
-            required
-          />
-          <button type="submit">Adicionar vizinho</button>
+          <div className="nomeVizinho">
+            <label htmlFor="neighborName">Nome da cidade vizinha:</label>
+            <input
+              type="text"
+              id="neighborName"
+              name="neighborName"
+              placeholder="Insira o nome do vizinho"
+              required
+            />
+          </div>
+
+
+          <div className="distancia">
+            <label htmlFor="distance">Distância:</label>
+            <input
+              type="number"
+              id="distance"
+              name="distance"
+              placeholder="Insira a distância em km entre as cidades"
+              min="0"
+              required
+            />
+          </div>
+
+          <div className="submit">
+            <button type="submit">Adicionar vizinho</button>
+          </div>
           <ul>
             {Object.entries(graph).map(([city, neighbors], index) => (
               <li key={index}>
-                {city}:{" "}
+                {city.toPascalCase()}:{" "}
                 {neighbors.map((neighbor, index) => (
-                    <span key={index}>
-                        {neighbor.cidade} ({neighbor.distancia} km)
-                        {index === neighbors.length - 1 ? "" : ", "}
-                    </span>
+                  <span key={index}>
+                    {neighbor.cidade.toPascalCase()} ({neighbor.distancia.toPascalCase()} km)
+                    {index === neighbors.length - 1 ? "" : ", "}
+                  </span>
                 ))}
               </li>
             ))}
-        </ul>
+          </ul>
         </form>
-    </body>
-</>
-);
+      </body>
+    </>
+  );
 }
 
 export default NewCities;
