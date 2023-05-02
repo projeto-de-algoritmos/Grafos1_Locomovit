@@ -13,7 +13,6 @@ function NewCities() {
       // Cria um novo nó no grafo para a cidade
       graph[cityName] = [{ cidade: neighborName, distancia: distance }];
     }
-
     // Verifica se o vizinho já existe no grafo
     if (!graph[neighborName]) {
       // Cria um novo nó no grafo para o vizinho
@@ -28,10 +27,17 @@ function NewCities() {
         graph[neighborName].push({ cidade: cityName, distancia: distance });
       }
     }
-
     // Atualiza o estado do componente com o novo grafo
     setGraph({ ...graph });
   }
+
+  const handleOriginChange = (event) => {
+    setOrigin(event.target.value);
+  };
+
+  const handleDestinationChange = (event) => {
+    setDestination(event.target.value);
+  };
 
   String.prototype.toPascalCase = function () {
     return this.split(" ")
@@ -45,6 +51,7 @@ function NewCities() {
     const neighborName = event.target.neighborName.value;
     const distance = event.target.distance.value;
     handleAddCity(cityName, neighborName, distance);
+
     event.target.reset();
   }
 
@@ -53,19 +60,19 @@ function NewCities() {
     const visited = {};
     const distanceMap = {};
     const previousMap = {};
-  
+
     visited[start] = true;
     distanceMap[start] = 0;
-  
+
     while (queue.length > 0) {
       const currentCity = queue.shift();
       const neighbors = graph[currentCity] || [];
-  
+
       for (let i = 0; i < neighbors.length; i++) {
         const neighbor = neighbors[i].cidade;
         const distance = parseFloat(neighbors[i].distancia); // converter para float
         const tentativeDistance = distanceMap[currentCity] + distance;
-  
+
         if (!visited[neighbor] || tentativeDistance < distanceMap[neighbor]) {
           visited[neighbor] = true;
           distanceMap[neighbor] = tentativeDistance;
@@ -74,10 +81,10 @@ function NewCities() {
         }
       }
     }
-  
+
     return { distanceMap, previousMap };
   }
-  
+
 
   function handleCalculateDistance(event) {
     event.preventDefault();
@@ -134,7 +141,7 @@ function NewCities() {
               required
             />
           </div>
-          
+
 
           <div className="submit">
             <button type="submit">Adicionar vizinho</button>
@@ -145,30 +152,47 @@ function NewCities() {
                 {city.toPascalCase()}:{" "}
                 {neighbors.map((neighbor, index) => (
                   <span key={index}>
-                    {neighbor.cidade.toPascalCase()} ({neighbor.distancia.toPascalCase()} km)
+                    {neighbor.cidade.toPascalCase()} ({neighbor.distancia} km)
                     {index === neighbors.length - 1 ? "" : ", "}
                   </span>
                 ))}
-            </li>
+              </li>
             ))}
-         </ul>
-         </form>
+          </ul>
+        </form>
         <hr />
         <h1>Distancia entre as cidades</h1>
         <form onSubmit={handleCalculateDistance}>
-          <label htmlFor="origin">Cidade de origem:</label>
-          <input type="text" id="origin" name="origin" value={origin} onChange={(event) => setOrigin(event.target.value)} />
-          <label htmlFor="destination">Cidade de destino:</label>
-          <input type="text" id="destination" name="destination" value={destination} onChange={(event) => setDestination(event.target.value)} />
+          <label htmlFor="origin">Origem:</label>
+          <select id="origin" value={origin} onChange={handleOriginChange}>
+            <option value="">Selecione a cidade de origem</option>
+            {Object.entries(graph).map(([city]) => (
+              <option key={city} value={city} onSelect={(event) => setOrigin(event.target
+                .value)}>
+                {city.toPascalCase()}
+              </option>
+            ))}
+          </select>
+
+          <label htmlFor="destination">Destino:</label>
+          <select id="destination" value={destination} onChange={handleDestinationChange}>
+            <option value="">Selecione a cidade de destino</option>
+            {Object.entries(graph).map(([city]) => (
+              <option key={city} value={city} onSelect={(event) => setDestination(event.target
+                .value)}>
+                {city.toPascalCase()}
+              </option>
+            ))}
+          </select>
           <button type="submit">Calcular distância</button>
         </form>
         {distance > 0 && (
-            <p>
-                A distância entre {origin} e {destination} é de {distance} km.
-            </p>
+          <p>
+            A distância entre {origin.toPascalCase()} e {destination.toPascalCase()} é de {distance} km.
+          </p>
         )}
         {distance === 0 && origin && destination && (
-            <p>Não existe caminho entre {origin.toPascalCase()} e {destination.toPascalCase()}.</p>
+          <p>Não existe caminho entre {origin.toPascalCase()} e {destination.toPascalCase()}.</p>
         )}
       </body>
     </div>
