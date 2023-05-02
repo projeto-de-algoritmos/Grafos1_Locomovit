@@ -11,6 +11,7 @@ export const Main = () => {
             </header>
             <body>
                 <NewCities />
+                
             </body>
         </>
     )

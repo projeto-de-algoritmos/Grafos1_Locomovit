@@ -12,6 +12,7 @@ function NewCities() {
       // Cria um novo nó no grafo para a cidade
       graph[cityName] = [{ cidade: neighborName, distancia: distance }];
     }
+
     // Verifica se o vizinho já existe no grafo
     if (!graph[neighborName]) {
       // Cria um novo nó no grafo para o vizinho
@@ -26,6 +27,7 @@ function NewCities() {
         graph[neighborName].push({ cidade: cityName, distancia: distance });
       }
     }
+
     // Atualiza o estado do componente com o novo grafo
     setGraph({ ...graph });
   }
@@ -39,58 +41,94 @@ function NewCities() {
     event.target.reset();
   }
 
+  function shortestPaths(graph, start) {
+    const queue = [start];
+    const visited = {};
+    const distanceMap = {};
+    const previousMap = {};
+  
+    visited[start] = true;
+    distanceMap[start] = 0;
+  
+    while (queue.length > 0) {
+      const currentCity = queue.shift();
+      const neighbors = graph[currentCity] || [];
+  
+      for (let i = 0; i < neighbors.length; i++) {
+        const neighbor = neighbors[i].cidade;
+        const distance = parseFloat(neighbors[i].distancia); // converter para float
+        const tentativeDistance = distanceMap[currentCity] + distance;
+  
+        if (!visited[neighbor] || tentativeDistance < distanceMap[neighbor]) {
+          visited[neighbor] = true;
+          distanceMap[neighbor] = tentativeDistance;
+          previousMap[neighbor] = currentCity;
+          queue.push(neighbor);
+        }
+      }
+    }
+  
+    return { distanceMap, previousMap };
+  }
+  
+
+  function handleCalculateDistance(event) {
+    event.preventDefault();
+    const { distanceMap } = shortestPaths(graph, origin);
+
+    if (distanceMap[destination] !== undefined) {
+      setDistance(distanceMap[destination]);
+    } else {
+      setDistance(0);
+    }
+  }
+
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
+  const [distance, setDistance] = useState(0);
+
   return (
     <>
       <head>
         <title>Cadastro de cidades</title>
-      </head>
+        </head>
       <body>
-        <h1>Cadastro de Cidades</h1>
-        <form id="city-form" onSubmit={handleSubmit}>
+        <h1>Cadastro de cidades</h1>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="cityName">Nome da cidade:</label>
-          <input
-            type="text"
-            id="cityName"
-            name="cityName"
-            placeholder="Insira o nome da cidade"
-            required
-          />
-
+          <input type="text" id="cityName" name="cityName" />
           <label htmlFor="neighborName">Nome da cidade vizinha:</label>
-          <input
-            type="text"
-            id="neighborName"
-            name="neighborName"
-            placeholder="Insira o nome do vizinho"
-            required
-          />
-          <label htmlFor="distance">Distância:</label>
-          <input
-            type="number"
-            id="distance"
-            name="distance"
-            placeholder="Insira a distância entre as cidades"
-            min="0"
-            required
-          />
-          <button type="submit">Adicionar vizinho</button>
-          <ul>
-            {Object.entries(graph).map(([city, neighbors], index) => (
-              <li key={index}>
-                {city}:{" "}
-                {neighbors.map((neighbor, index) => (
-                    <span key={index}>
-                        {neighbor.cidade} ({neighbor.distancia} km)
-                        {index === neighbors.length - 1 ? "" : ", "}
-                    </span>
+          <input type="text" id="neighborName" name="neighborName" />
+          <label htmlFor="distance">Distância entre as cidades:</label>
+          <input type="number" id="distance" name="distance" />
+          <button type="submit">Adicionar cidade</button>
+        </form>
+        
+        <h2>Lista de cidades e vizinhos</h2>
+        <ul>
+            {Object.keys(graph).map((cityName, index) => (
+            <li key={index}>
+                {cityName} - Vizinhos:{" "}
+                {graph[cityName].map((edge, index) => (
+                <span key={index}>
+                    {edge.cidade} ({edge.distancia} km){" "}
+                </span>
                 ))}
-              </li>
+            </li>
             ))}
         </ul>
+        <hr />
+        <h1>Distancia entre as cidades</h1>
+        <form onSubmit={handleCalculateDistance}>
+          <label htmlFor="origin">Cidade de origem:</label>
+          <input type="text" id="origin" name="origin" value={origin} onChange={(event) => setOrigin(event.target.value)} />
+          <label htmlFor="destination">Cidade de destino:</label>
+          <input type="text" id="destination" name="destination" value={destination} onChange={(event) => setDestination(event.target.value)} />
+          <button type="submit">Calcular distância</button>
         </form>
-    </body>
-</>
-);
+        <p>A distância entre {origin} e {destination} é de {distance} km.</p>
+      </body>
+    </>
+  );
 }
-
 export default NewCities;
