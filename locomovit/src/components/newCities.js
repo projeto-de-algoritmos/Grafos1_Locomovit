@@ -1,29 +1,35 @@
 import React, { useState } from "react";
 
 function NewCities() {
-  const [city, setCity] = useState({ name: "", neighbors: [] });
+  const [cities, setCities] = useState([]);
+  const [newCity, setNewCity] = useState({ name: "", neighbors: [] });
   const [neighbor, setNeighbor] = useState({ name: "", distance: "" });
 
   function handleChange(e) {
     if (e.target.name === "city-name") {
-      setCity({ ...city, name: e.target.value });
+      setNewCity({ ...newCity, name: e.target.value });
     } else {
       setNeighbor({ ...neighbor, [e.target.name]: e.target.value });
     }
   }
 
   function addNeighbor() {
-    setCity({
-      ...city,
-      neighbors: [...city.neighbors, { ...neighbor }],
+    setNewCity({
+      ...newCity,
+      neighbors: [...newCity.neighbors, { ...neighbor }],
     });
     setNeighbor({ name: "", distance: "" });
   }
 
   function removeNeighbor(index) {
-    const newNeighbors = [...city.neighbors];
+    const newNeighbors = [...newCity.neighbors];
     newNeighbors.splice(index, 1);
-    setCity({ ...city, neighbors: newNeighbors });
+    setNewCity({ ...newCity, neighbors: newNeighbors });
+  }
+
+  function addCity() {
+    setCities([...cities, { ...newCity }]);
+    setNewCity({ name: "", neighbors: [] });
   }
 
   return (
@@ -41,7 +47,7 @@ function NewCities() {
             name="city-name"
             placeholder="Insira o nome da cidade"
             onChange={handleChange}
-            value={city.name ? city.name : ""}
+            value={newCity.name ? newCity.name : ""}
             required
           />
 
@@ -70,12 +76,29 @@ function NewCities() {
             Adicionar vizinho
           </button>
           <ul>
-            {city.neighbors.map((neighbor, index) => (
+            {newCity.neighbors.map((neighbor, index) => (
               <li key={index}>
                 {neighbor.name} - {neighbor.distance} km
                 <button type="button" onClick={() => removeNeighbor(index)}>
                   Remover
                 </button>
+              </li>
+            ))}
+          </ul>
+          <button type="button" onClick={addCity}>
+            Adicionar cidade
+          </button>
+          <ul>
+            {cities.map((city, index) => (
+              <li key={index}>
+                {city.name}
+                <ul>
+                  {city.neighbors.map((neighbor, index) => (
+                    <li key={index}>
+                      {neighbor.name} - {neighbor.distance} km
+                    </li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ul>
