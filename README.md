@@ -15,10 +15,10 @@ Este projeto consiste em cadastrar as cidades envolvidas e as distâncias entre 
 ## Screenshots
 ### Página inicial:
 ![image](https://user-images.githubusercontent.com/57445188/235748360-a359b17b-9110-4e1c-9113-2bbd59b30549.png)
-<br/>
+<br>
 ### Cadastrando algumas cidades e mostrando os viznhos:
 ![image](https://user-images.githubusercontent.com/57445188/235748514-c0d846b2-2fb5-4846-bdca-24ac24e23725.png)
-<br/>
+<br>
 ### Calculando a distância entre 2 cidades, buscando o menor caminho:
 ![image](https://user-images.githubusercontent.com/57445188/235749195-b7b3c0e8-749e-4e01-983b-0bd2df8c82b1.png)
 
@@ -28,9 +28,9 @@ Este projeto consiste em cadastrar as cidades envolvidas e as distâncias entre 
 
 ### Como instalar:
 
-1 - Clone o repositório
-2 - Execute o comando "npm install"
-3 - Execute o comando "npm start" para rodar o projeto
+1 - Clone o repositório<br>
+2 - Execute o comando "npm install"<br>
+3 - Execute o comando "npm start" para rodar o projeto<br>
 
 
 
