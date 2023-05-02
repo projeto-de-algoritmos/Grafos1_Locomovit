@@ -25,13 +25,12 @@ Este projeto consiste em cadastrar as cidades envolvidas e as distâncias entre 
 ## Instalação 
 **Linguagem**: JavaScript<br>
 **Framework**: React.js<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
 
-## Uso 
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
+### Como instalar:
 
-## Outros 
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
+1 - Clone o repositório
+2 - Execute o comando "npm install"
+3 - Execute o comando "npm start" para rodar o projeto
 
 
 
