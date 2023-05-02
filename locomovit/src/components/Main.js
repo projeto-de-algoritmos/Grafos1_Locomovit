@@ -6,13 +6,8 @@ import NewCities from './NewCities';
 export const Main = () => {
     return (
         <>
-            <header className="App-header">
-                <Header />
-            </header>
-            <body>
-                <NewCities />
-                
-            </body>
+            <Header />
+            <NewCities />
         </>
     )
 }

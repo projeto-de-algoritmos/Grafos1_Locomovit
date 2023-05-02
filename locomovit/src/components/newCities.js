@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './styles/NewCities.css'
 
 function NewCities() {
   const [graph, setGraph] = useState({});
@@ -31,6 +32,12 @@ function NewCities() {
     // Atualiza o estado do componente com o novo grafo
     setGraph({ ...graph });
   }
+
+  String.prototype.toPascalCase = function () {
+    return this.split(" ")
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join("");
+  };
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -88,35 +95,64 @@ function NewCities() {
   const [distance, setDistance] = useState(0);
 
   return (
-    <>
-      <head>
-        <title>Cadastro de cidades</title>
-        </head>
+    <div className="newCities">
+      <title>Cadastro de cidades</title>
       <body>
-        <h1>Cadastro de cidades</h1>
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="cityName">Nome da cidade:</label>
-          <input type="text" id="cityName" name="cityName" />
-          <label htmlFor="neighborName">Nome da cidade vizinha:</label>
-          <input type="text" id="neighborName" name="neighborName" />
-          <label htmlFor="distance">Distância entre as cidades:</label>
-          <input type="number" id="distance" name="distance" />
-          <button type="submit">Adicionar cidade</button>
-        </form>
-        
-        <h2>Lista de cidades e vizinhos</h2>
-        <ul>
-            {Object.keys(graph).map((cityName, index) => (
-            <li key={index}>
-                {cityName} - Vizinhos:{" "}
-                {graph[cityName].map((edge, index) => (
-                <span key={index}>
-                    {edge.cidade} ({edge.distancia} km){" "}
-                </span>
+        <h1>Cadastro de Cidades</h1>
+        <form id="city-form" onSubmit={handleSubmit}>
+          <div className="nomeCidade">
+            <label htmlFor="cityName">Nome da cidade:</label>
+            <input
+              type="text"
+              id="cityName"
+              name="cityName"
+              placeholder="Insira o nome da cidade"
+              required
+            />
+          </div>
+
+          <div className="nomeVizinho">
+            <label htmlFor="neighborName">Nome da cidade vizinha:</label>
+            <input
+              type="text"
+              id="neighborName"
+              name="neighborName"
+              placeholder="Insira o nome do vizinho"
+              required
+            />
+          </div>
+
+
+          <div className="distancia">
+            <label htmlFor="distance">Distância:</label>
+            <input
+              type="number"
+              id="distance"
+              name="distance"
+              placeholder="Insira a distância em km entre as cidades"
+              min="0"
+              required
+            />
+          </div>
+          
+
+          <div className="submit">
+            <button type="submit">Adicionar vizinho</button>
+          </div>
+          <ul>
+            {Object.entries(graph).map(([city, neighbors], index) => (
+              <li key={index}>
+                {city.toPascalCase()}:{" "}
+                {neighbors.map((neighbor, index) => (
+                  <span key={index}>
+                    {neighbor.cidade.toPascalCase()} ({neighbor.distancia.toPascalCase()} km)
+                    {index === neighbors.length - 1 ? "" : ", "}
+                  </span>
                 ))}
             </li>
             ))}
-        </ul>
+         </ul>
+         </form>
         <hr />
         <h1>Distancia entre as cidades</h1>
         <form onSubmit={handleCalculateDistance}>
@@ -126,9 +162,16 @@ function NewCities() {
           <input type="text" id="destination" name="destination" value={destination} onChange={(event) => setDestination(event.target.value)} />
           <button type="submit">Calcular distância</button>
         </form>
-        <p>A distância entre {origin} e {destination} é de {distance} km.</p>
+        {distance > 0 && (
+            <p>
+                A distância entre {origin} e {destination} é de {distance} km.
+            </p>
+        )}
+        {distance === 0 && origin && destination && (
+            <p>Não existe caminho entre {origin.toPascalCase()} e {destination.toPascalCase()}.</p>
+        )}
       </body>
-    </>
+    </div>
   );
 }
 export default NewCities;
