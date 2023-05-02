@@ -1,35 +1,42 @@
 import React, { useState } from "react";
 
 function NewCities() {
-  const [cities, setCities] = useState([]);
-  const [newCity, setNewCity] = useState({ name: "", neighbors: [] });
-  const [neighbor, setNeighbor] = useState({ name: "", distance: "" });
+  const [graph, setGraph] = useState({});
 
-  function handleChange(e) {
-    if (e.target.name === "city-name") {
-      setNewCity({ ...newCity, name: e.target.value });
+  function handleAddCity(cityName, neighborName, distance) {
+    // Verifica se a cidade já existe no grafo
+    if (graph[cityName]) {
+      // Adiciona vizinho à cidade existente
+      graph[cityName].push({ cidade: neighborName, distancia: distance });
     } else {
-      setNeighbor({ ...neighbor, [e.target.name]: e.target.value });
+      // Cria um novo nó no grafo para a cidade
+      graph[cityName] = [{ cidade: neighborName, distancia: distance }];
     }
+    // Verifica se o vizinho já existe no grafo
+    if (!graph[neighborName]) {
+      // Cria um novo nó no grafo para o vizinho
+      graph[neighborName] = [{ cidade: cityName, distancia: distance }];
+    } else {
+      // Verifica se a cidade já é vizinha do vizinho
+      const hasNeighbor = graph[neighborName].some(
+        (edge) => edge.cidade === cityName
+      );
+      if (!hasNeighbor) {
+        // Adiciona cidade como vizinha do vizinho existente
+        graph[neighborName].push({ cidade: cityName, distancia: distance });
+      }
+    }
+    // Atualiza o estado do componente com o novo grafo
+    setGraph({ ...graph });
   }
 
-  function addNeighbor() {
-    setNewCity({
-      ...newCity,
-      neighbors: [...newCity.neighbors, { ...neighbor }],
-    });
-    setNeighbor({ name: "", distance: "" });
-  }
-
-  function removeNeighbor(index) {
-    const newNeighbors = [...newCity.neighbors];
-    newNeighbors.splice(index, 1);
-    setNewCity({ ...newCity, neighbors: newNeighbors });
-  }
-
-  function addCity() {
-    setCities([...cities, { ...newCity }]);
-    setNewCity({ name: "", neighbors: [] });
+  function handleSubmit(event) {
+    event.preventDefault();
+    const cityName = event.target.cityName.value;
+    const neighborName = event.target.neighborName.value;
+    const distance = event.target.distance.value;
+    handleAddCity(cityName, neighborName, distance);
+    event.target.reset();
   }
 
   return (
@@ -39,26 +46,22 @@ function NewCities() {
       </head>
       <body>
         <h1>Cadastro de Cidades</h1>
-        <form id="city-form">
-          <label htmlFor="city-name">Nome da cidade:</label>
+        <form id="city-form" onSubmit={handleSubmit}>
+          <label htmlFor="cityName">Nome da cidade:</label>
           <input
             type="text"
-            id="city-name"
-            name="city-name"
+            id="cityName"
+            name="cityName"
             placeholder="Insira o nome da cidade"
-            onChange={handleChange}
-            value={newCity.name ? newCity.name : ""}
             required
           />
 
-          <label htmlFor="neighbor-name">Nome da cidade vizinha:</label>
+          <label htmlFor="neighborName">Nome da cidade vizinha:</label>
           <input
             type="text"
-            id="neighbor-name"
-            name="name"
+            id="neighborName"
+            name="neighborName"
             placeholder="Insira o nome do vizinho"
-            onChange={handleChange}
-            value={neighbor.name}
             required
           />
           <label htmlFor="distance">Distância:</label>
@@ -68,44 +71,26 @@ function NewCities() {
             name="distance"
             placeholder="Insira a distância entre as cidades"
             min="0"
-            value={neighbor.distance}
-            onChange={handleChange}
             required
           />
-          <button type="button" onClick={addNeighbor}>
-            Adicionar vizinho
-          </button>
+          <button type="submit">Adicionar vizinho</button>
           <ul>
-            {newCity.neighbors.map((neighbor, index) => (
+            {Object.entries(graph).map(([city, neighbors], index) => (
               <li key={index}>
-                {neighbor.name} - {neighbor.distance} km
-                <button type="button" onClick={() => removeNeighbor(index)}>
-                  Remover
-                </button>
+                {city}:{" "}
+                {neighbors.map((neighbor, index) => (
+                    <span key={index}>
+                        {neighbor.cidade} ({neighbor.distancia} km)
+                        {index === neighbors.length - 1 ? "" : ", "}
+                    </span>
+                ))}
               </li>
             ))}
-          </ul>
-          <button type="button" onClick={addCity}>
-            Adicionar cidade
-          </button>
-          <ul>
-            {cities.map((city, index) => (
-              <li key={index}>
-                {city.name}
-                <ul>
-                  {city.neighbors.map((neighbor, index) => (
-                    <li key={index}>
-                      {neighbor.name} - {neighbor.distance} km
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
+        </ul>
         </form>
-      </body>
-    </>
-  );
+    </body>
+</>
+);
 }
 
 export default NewCities;
