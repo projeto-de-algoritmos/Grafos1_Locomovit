@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/Grafos1_Locomovit/static/css/main.4938335f.css",
-    "main.js": "/Grafos1_Locomovit/static/js/main.0919cf58.js",
+    "main.js": "/Grafos1_Locomovit/static/js/main.82df30c2.js",
     "static/js/787.64f1eb13.chunk.js": "/Grafos1_Locomovit/static/js/787.64f1eb13.chunk.js",
     "static/media/predo.jpg": "/Grafos1_Locomovit/static/media/predo.f06d1d90ca3bda418810.jpg",
     "static/media/davi.jpg": "/Grafos1_Locomovit/static/media/davi.ae9703f95a8c21a4e9e0.jpg",
     "static/media/logo.png": "/Grafos1_Locomovit/static/media/logo.7595033ade45ea4b6ba7.png",
     "index.html": "/Grafos1_Locomovit/index.html",
     "main.4938335f.css.map": "/Grafos1_Locomovit/static/css/main.4938335f.css.map",
-    "main.0919cf58.js.map": "/Grafos1_Locomovit/static/js/main.0919cf58.js.map",
+    "main.82df30c2.js.map": "/Grafos1_Locomovit/static/js/main.82df30c2.js.map",
     "787.64f1eb13.chunk.js.map": "/Grafos1_Locomovit/static/js/787.64f1eb13.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4938335f.css",
-    "static/js/main.0919cf58.js"
+    "static/js/main.82df30c2.js"
   ]
 }
